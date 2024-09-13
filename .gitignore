@@ -1,0 +1,44 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of the Go compiler
+*.out
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Directories
+/vendor/
+bin/
+build/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# IDE/editor config files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Ignore local Go module cache
+GOPATH/pkg/
+
+# Ignore sensitive environment variables
+.env
+.k8s/secret.yaml
+script/
+
+# Ignore built binaries
+cmd/api/api
+cmd/job/job
+
+# MacOS system files
+.DS_Store

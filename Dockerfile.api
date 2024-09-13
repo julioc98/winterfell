@@ -1,0 +1,31 @@
+# Stage 1: Build the application
+FROM golang:1.22-alpine AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the go.mod and go.sum files to the working directory and download dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy the API source code to the container
+COPY cmd/api/ ./cmd/api/
+COPY internal/ ./internal/
+
+# Build the API binary
+RUN go build -o /app/api ./cmd/api/main.go
+
+# Stage 2: Final image
+FROM gcr.io/distroless/base-debian11
+
+# Set the working directory for the final container
+WORKDIR /app
+
+# Copy the binary from the build stage
+COPY --from=build /app/api /usr/local/bin/api
+
+# Expose the port that the API will use
+EXPOSE 3000
+
+# Default command to run the API
+ENTRYPOINT ["api"]
